@@ -1,0 +1,11 @@
+{
+  "name": "chat-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/junctionxseoul2020/chat-server",
+  "author": "kang-heewon <heewon.dev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.0.3"
+  }
+}
