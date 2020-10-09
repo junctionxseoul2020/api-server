@@ -1,0 +1,19 @@
+{
+  "type": "mysql",
+  "host": "junctionx.database.windows.net",
+  "port": "1433",
+  "username": "junction",
+  "password": "helloteam1@",
+  "database": "junction",
+  "synchronize": "true",
+  "logging": "false",
+  "entities": [
+    "src/entity/**/*.ts"
+  ],
+  "migrations": [
+    "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.ts"
+  ]
+}

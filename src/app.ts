@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import express from "express"
 import {indexRouter} from "./router/indexRouter";
 import {socketRouter} from "./router/socketRouter";
