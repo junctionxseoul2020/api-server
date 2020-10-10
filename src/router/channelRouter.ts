@@ -26,12 +26,25 @@ export class channelRouter {
             if (!workspace) {
                 return res.json('no workspace')
             }
-            const channels = await this.channelRepository.find({workspace});
+            const channels = await this.channelRepository.find({
+                workspace,
+                isDM: false,
+                isConference: false,
+                isPrivate: false
+            });
             return res.json(channels);
         })
 
         this.router.post('/info', async (req, res) => {
             const channel = await this.channelRepository.findOne({id: req.body.id}, {relations: ['participants']});
+            if (!channel) {
+                return res.json('no channel')
+            }
+            return res.json(channel);
+        })
+
+        this.router.post('/lounge', async (req, res) => {
+            const channel = await this.channelRepository.findOne({name: '라운지'}, {relations: ['participants']});
             if (!channel) {
                 return res.json('no channel')
             }

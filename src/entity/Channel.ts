@@ -23,6 +23,9 @@ export class Channel {
     @Column({default: false})
     isInstantMessage!: boolean;
 
+    @Column({default: false})
+    isPrivate!: boolean;
+
     @ManyToMany(() => User, user => user.channels)
     @JoinTable()
     participants!: User[];
