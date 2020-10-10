@@ -45,5 +45,13 @@ export class userRouter {
             await this.userRepository.save(user)
             return res.json(user)
         });
+
+        this.router.post('/list', async (req, res) => {
+            const workspace = await this.workspaceRepository.findOne({id: req.body.workspaceId}, {relations: ['participants']})
+            if (!workspace) {
+                return res.json('workspace error')
+            }
+            return res.json(workspace.participants)
+        });
     }
 }

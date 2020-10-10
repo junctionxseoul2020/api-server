@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "./User";
 
 @Entity()
 export class Workspace {
@@ -8,4 +9,7 @@ export class Workspace {
 
     @Column()
     name!: string;
+
+    @OneToMany(() => User, (user) => user.workspace)
+    participants!: User[];
 }
