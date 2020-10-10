@@ -1,9 +1,9 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Workspace} from "./Workspace";
 import {User} from "./User";
 
 @Entity()
-export class Chat {
+export class Channel {
 
     @PrimaryGeneratedColumn()
     id!: number;
@@ -11,17 +11,8 @@ export class Chat {
     @Column()
     name!: string;
 
-    @Column()
+    @ManyToMany(() => User)
     participants!: User[];
-
-    @Column()
-    password!: string;
-
-    @Column()
-    hashcode!: string;
-
-    @Column({nullable: true})
-    status!: string;
 
     @ManyToOne(() => Workspace)
     workspace!: Workspace;

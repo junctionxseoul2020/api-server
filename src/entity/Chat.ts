@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Workspace} from "./Workspace";
-import has = Reflect.has;
+import {User} from "./User";
 
 @Entity()
 export class Chat {
@@ -9,29 +9,14 @@ export class Chat {
     id!: number;
 
     @Column()
-    name!: string;
+    text!: string;
 
-    @Column()
-    email!: string;
+    @ManyToOne(() => User)
+    author!: User;
 
-    @Column()
-    password!: string;
-
-    @Column()
-    hashcode!: string;
-
-    @Column({ nullable: true })
-    status!: string;
-
-    @ManyToOne(() => Workspace)
+    @ManyToMany(() => Workspace)
     workspace!: Workspace;
 
-    toUser(name: string, email: string, password: string, hashcode: string, workspace: Workspace) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.hashcode = hashcode;
-        this.workspace = workspace;
-        return this;
-    }
+    @CreateDateColumn({type: "timestamp"})
+    createdAt!: Date;
 }

@@ -3,8 +3,8 @@ import {User} from "../entity/User";
 import {connection} from "../database";
 
 export class indexRouter {
-    router = Router();
-    userRepository = connection.getRepository(User);
+    public router = Router();
+    private userRepository = connection.getRepository(User);
 
     constructor() {
         console.log("indexRouter 부트")
@@ -14,4 +14,4 @@ export class indexRouter {
             res.send(user)
         });
     }
-    }
+}

@@ -4,15 +4,15 @@ import {connection} from "../database";
 import {Workspace} from "../entity/Workspace";
 
 export class userRouter {
-    router = Router();
-    userRepository = connection.getRepository(User);
-    workspaceRepository = connection.getRepository(Workspace);
+    public router = Router();
+    private userRepository = connection.getRepository(User);
+    private workspaceRepository = connection.getRepository(Workspace);
 
     constructor() {
         console.log("indexRouter 부트")
 
         this.router.get('/login', async (req, res) => {
-            const user = await this.userRepository.findOne({ email: req.body.email })
+            const user = await this.userRepository.findOne({email: req.body.email})
             if (!user) {
                 return res.json('not found user')
             }
@@ -25,7 +25,7 @@ export class userRouter {
         });
 
         this.router.get('/logout', async (req, res) => {
-            const user = await this.userRepository.findOne({ id: req.body.id })
+            const user = await this.userRepository.findOne({id: req.body.id})
             if (!user) {
                 return res.json('not found user')
             }
@@ -35,8 +35,8 @@ export class userRouter {
         });
 
         this.router.get('/register', async (req, res) => {
-            const workspace = await this.workspaceRepository.findOne({ id: req.body.id })
-            if(!workspace) {
+            const workspace = await this.workspaceRepository.findOne({id: req.body.id})
+            if (!workspace) {
                 return res.json('workspace error')
             }
             const user = new User().toUser(req.body.name, req.body.email, req.body.password, req.body.hashcode, workspace)

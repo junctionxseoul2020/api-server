@@ -1,6 +1,11 @@
 import {Server} from "socket.io";
+import {connection} from "../database";
+import {Channel} from "../entity/Channel";
+import {User} from "../entity/User";
 
 export class socketRouter {
+    private channelRepository = connection.getRepository(Channel);
+    private userRepository = connection.getRepository(User);
 
     constructor(io: Server) {
         console.log("socketRouter 부트")
@@ -15,10 +20,17 @@ export class socketRouter {
                 io.to(room).emit('chat message', name, msg);
             });
 
-            socket.on('join room', (room, name) => {
-                socket.join(room, () => {
-                    console.log('join', room, name)
-                    io.to(room).emit('joinRoom', name);
+            socket.on('join room', (room, userId) => {
+                socket.join(room, async () => {
+                    const user = await this.userRepository.findOne({id: userId})
+                    const channel = await this.channelRepository.findOne({id: room})
+                    if (!user || !channel) {
+                        return;
+                    }
+                    channel.participants.push(user)
+                    await this.channelRepository.save(channel);
+                    console.log('join', room, user.name)
+                    io.to(room).emit('joinRoom', user.name);
                 });
             });
 
