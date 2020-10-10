@@ -32,6 +32,9 @@ export class channelRouter {
 
         this.router.post('/info', async (req, res) => {
             const channel = await this.channelRepository.findOne({id: req.body.id}, {relations: ['participants']});
+            if (!channel) {
+                return res.json('no channel')
+            }
             return res.json(channel);
         })
 

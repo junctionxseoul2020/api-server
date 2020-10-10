@@ -39,7 +39,6 @@ export class conferenceRouter {
             const savedChannel = await this.channelRepository.save(channel);
             const conference = new Conference();
             conference.description = req.body.description;
-            conference.participants = users;
             conference.name = req.body.name;
             conference.releasedAt = req.body.releasedAt;
             conference.workspace = workspace;
@@ -50,6 +49,10 @@ export class conferenceRouter {
 
         this.router.post('/info', async (req, res) => {
             const conference = await this.conferenceRepository.findOne({id: req.body.id}, {relations: ['participants', 'channel']});
+            console.log(conference)
+            if (!conference) {
+                return res.json('no conference')
+            }
             return res.json(conference);
         })
     }

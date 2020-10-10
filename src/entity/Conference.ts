@@ -2,6 +2,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     JoinTable,
     ManyToMany,
     ManyToOne,
@@ -29,6 +30,7 @@ export class Conference {
     participants!: User[];
 
     @OneToOne(() => Channel)
+    @JoinColumn()
     channel!: Channel;
 
     @CreateDateColumn({type: 'timestamp'})
