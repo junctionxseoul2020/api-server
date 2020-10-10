@@ -1,6 +1,7 @@
 import {Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Workspace} from "./Workspace";
 import {Channel} from "./Channel";
+import {Conference} from "./Conference";
 
 @Entity()
 export class User {
@@ -31,6 +32,9 @@ export class User {
 
     @ManyToMany(() => Channel, channel => channel.participants)
     channels!: Channel[];
+
+    @ManyToMany(() => Conference, conference => conference.participants)
+    conferences!: Conference[];
 
     toUser(name: string, email: string, password: string, status: string, hashcode: string, workspace: Workspace) {
         this.name = name;

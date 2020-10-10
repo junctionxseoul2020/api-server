@@ -14,12 +14,15 @@ export class Conference {
     @Column()
     description!: string;
 
-    @ManyToMany(() => User, user => user.id)
+    @ManyToMany(() => User, user => user.conferences)
     @JoinTable()
     participants!: User[];
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt!: Date
+
+    @Column()
+    releasedAt!: Date
 
     @ManyToOne(() => Workspace)
     workspace!: Workspace;
