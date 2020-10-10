@@ -30,9 +30,9 @@ export class socketRouter {
                 chat.text = msg;
                 chat.author = user;
                 chat.channel = channel;
-                await this.chatRepository.save(chat);
-                console.log('chat', room, user.name, msg);
-                io.to(room).emit('chatMessage', user.name, msg);
+                const savedChat = await this.chatRepository.save(chat);
+                console.log('chat', room, user.name, savedChat);
+                io.to(room).emit('chatMessage', user.name, JSON.stringify(savedChat));
             });
 
             socket.on('joinRoom', (room, userId) => {
