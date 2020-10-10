@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "ts-node src/index.ts",
     "build": "tsc",
-    "start": "node build/index.js"
+    "start": "yarn build && node build/index.js"
   },
   "devDependencies": {
     "@types/node": "^14.11.8",
