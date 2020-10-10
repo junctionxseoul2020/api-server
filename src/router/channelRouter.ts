@@ -37,15 +37,27 @@ export class channelRouter {
 
         this.router.post('/create', async (req, res) => {
             const user = await this.userRepository.findOne({id: req.body.userId});
+            const users = await this.userRepository.findByIds(req.body.userIds);
             const workspace = await this.workspaceRepository.findOne({id: req.body.workspaceId});
-            if (!workspace || !user) {
+            if (!workspace || !user || users.length <= 0) {
                 return res.json('no workspace or user')
             }
             const channel = new Channel();
             channel.workspace = workspace;
             channel.name = req.body.name;
             channel.description = req.body.description;
-            channel.participants = [user];
+            channel.participants = users;
+            const savedChannel = await this.channelRepository.save(channel);
+            return res.json(savedChannel);
+        });
+
+        this.router.post('/invite', async (req, res) => {
+            const users = await this.userRepository.findByIds(req.body.userIds);
+            const channel = await this.channelRepository.findOne({id: req.body.channelId}, {relations: ['participants']});
+            if (!channel || users.length <= 0) {
+                return res.json('no workspace or users')
+            }
+            channel.participants = [...channel.participants, ...users];
             const savedChannel = await this.channelRepository.save(channel);
             return res.json(savedChannel);
         });
