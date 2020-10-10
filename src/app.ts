@@ -18,7 +18,7 @@ export const app = async () => {
     const io = socket(server);
     new socketRouter(io)
 
-    server.listen(8080, () => {
+    server.listen(process.env.PORT || 3000, () => {
         console.log("Server가 실행되었습니다.")
     })
 }
