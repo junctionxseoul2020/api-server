@@ -1,8 +1,17 @@
 import {Router} from "express";
+import {User} from "../entity/User";
+import {connection} from "../database";
 
-export const indexRouter = Router();
+export class indexRouter {
+    router = Router();
+    userRepository = connection.getRepository(User);
 
-indexRouter.get('/', (req, res) => {
-    res.send('Hello World!')
-});
+    constructor() {
+        console.log("indexRouter 부트")
 
+        this.router.get('/', async (req, res) => {
+            const user = await this.userRepository.findOne()
+            res.send(user)
+        });
+    }
+    }

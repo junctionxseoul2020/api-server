@@ -2,11 +2,13 @@ import 'reflect-metadata'
 import express from "express"
 import {indexRouter} from "./router/indexRouter";
 import {socketRouter} from "./router/socketRouter";
+import {userRouter} from "./router/userRouter";
 
 export const app = async () => {
+    console.log("앱 부트")
     const app = express()
-
-    app.use('/',indexRouter);
+    app.use('/', new indexRouter().router);
+    app.use('/user', new userRouter().router);
     app.use('/socket',socketRouter);
 
     app.listen(3000, () => {

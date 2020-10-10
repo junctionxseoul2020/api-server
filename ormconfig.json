@@ -1,8 +1,8 @@
 {
   "type": "mysql",
-  "host": "junctionx.database.windows.net",
-  "port": "1433",
-  "username": "junction",
+  "host": "hello-team.mysql.database.azure.com",
+  "port": "3306",
+  "username": "junction@hello-team",
   "password": "helloteam1@",
   "database": "junction",
   "synchronize": "true",
