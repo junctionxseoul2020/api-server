@@ -1,6 +1,16 @@
-import {Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToOne,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import {Workspace} from "./Workspace";
 import {User} from "./User";
+import {Channel} from "./Channel";
 
 @Entity()
 export class Conference {
@@ -17,6 +27,9 @@ export class Conference {
     @ManyToMany(() => User, user => user.conferences)
     @JoinTable()
     participants!: User[];
+
+    @OneToOne(() => Channel)
+    channel!: Channel;
 
     @CreateDateColumn({type: 'timestamp'})
     createdAt!: Date

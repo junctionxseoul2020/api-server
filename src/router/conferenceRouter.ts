@@ -3,12 +3,14 @@ import {connection} from "../database";
 import {Conference} from "../entity/Conference";
 import {User} from "../entity/User";
 import {Workspace} from "../entity/Workspace";
+import {Channel} from "../entity/Channel";
 
 export class conferenceRouter {
     public router = Router();
     private conferenceRepository = connection.getRepository(Conference);
     private userRepository = connection.getRepository(User);
     private workspaceRepository = connection.getRepository(Workspace);
+    private channelRepository = connection.getRepository(Channel);
 
     constructor() {
         console.log("conferenceRouter 부트")
@@ -27,18 +29,27 @@ export class conferenceRouter {
             if (users.length <= 0 || !workspace) {
                 return res.json('no users or workspace');
             }
+            const channel = new Channel();
+            channel.participants = users;
+            channel.workspace = workspace;
+            channel.description = req.body.description;
+            channel.name = req.body.name;
+            channel.isConference = true;
+            channel.isInstantMessage = req.body.isInstanceMessage;
+            const savedChannel = await this.channelRepository.save(channel);
             const conference = new Conference();
             conference.description = req.body.description;
             conference.participants = users;
             conference.name = req.body.name;
             conference.releasedAt = req.body.releasedAt;
             conference.workspace = workspace;
+            conference.channel = savedChannel
             const savedConference = await this.conferenceRepository.save(conference);
             return res.json(savedConference);
         })
 
         this.router.post('/info', async (req, res) => {
-            const conference = await this.conferenceRepository.findOne({id: req.body.id}, {relations: ['participants']});
+            const conference = await this.conferenceRepository.findOne({id: req.body.id}, {relations: ['participants', 'channel']});
             return res.json(conference);
         })
     }

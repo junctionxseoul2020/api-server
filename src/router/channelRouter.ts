@@ -47,6 +47,7 @@ export class channelRouter {
             channel.name = req.body.name;
             channel.description = req.body.description;
             channel.participants = users;
+            channel.isDM = req.body.isDM;
             const savedChannel = await this.channelRepository.save(channel);
             return res.json(savedChannel);
         });

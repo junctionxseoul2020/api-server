@@ -14,6 +14,15 @@ export class Channel {
     @Column()
     description!: string;
 
+    @Column({default: false})
+    isDM!: boolean;
+
+    @Column({default: false})
+    isConference!: boolean;
+
+    @Column({default: false})
+    isInstantMessage!: boolean;
+
     @ManyToMany(() => User, user => user.channels)
     @JoinTable()
     participants!: User[];
