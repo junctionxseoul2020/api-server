@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Workspace} from "./Workspace";
 import {User} from "./User";
 
@@ -11,7 +11,8 @@ export class Channel {
     @Column()
     name!: string;
 
-    @ManyToMany(() => User)
+    @ManyToMany(() => User, user => user.id)
+    @JoinTable()
     participants!: User[];
 
     @ManyToOne(() => Workspace)

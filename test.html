@@ -61,16 +61,25 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
     $(function () {
-        const socket = io('https://junctionx.azurewebsites.net/');
-        socket.emit('join room', 'ab', 's')
+        const socket = io('http://localhost:3000');
+        socket.emit('joinRoom', 1, 5)
         $('form').submit(function (e) {
             e.preventDefault(); // prevents page reloading
-            socket.emit('chat message', 'ab', $('#m').val(), $('#m').val());
+            socket.emit('chatMessage', 1, 5, $('#m').val());
             $('#m').val('');
             return false;
         });
-        socket.on('chat message', function (msg) {
+        socket.on('chatMessage', function (name, msg) {
             $('#messages').append($('<li>').text(msg));
+        });
+        socket.on('joinRoom', function (name, chats) {
+            if (chats) {
+                const data = JSON.parse(chats)
+                data.forEach((chat) => {
+                    $('#messages').append($('<li>').text(chat.text));
+                })
+                $('#messages').append($('<li>').text(`${name} is joined`));
+            }
         });
     });
 

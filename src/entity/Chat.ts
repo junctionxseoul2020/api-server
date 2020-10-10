@@ -1,6 +1,6 @@
-import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Workspace} from "./Workspace";
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "./User";
+import {Channel} from "./Channel";
 
 @Entity()
 export class Chat {
@@ -14,8 +14,8 @@ export class Chat {
     @ManyToOne(() => User)
     author!: User;
 
-    @ManyToMany(() => Workspace)
-    workspace!: Workspace;
+    @ManyToOne(() => Channel)
+    channel!: Channel;
 
     @CreateDateColumn({type: "timestamp"})
     createdAt!: Date;
