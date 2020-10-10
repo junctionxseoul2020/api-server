@@ -1,8 +1,13 @@
-import {Router} from "express";
+import {Server} from "socket.io";
 
-export const socketRouter = Router();
+export class socketRouter {
 
-socketRouter.get('/', (req, res) => {
-    res.send('World!')
-});
+    constructor(io: Server) {
+        console.log("socketRouter 부트")
 
+        io.on('connection', (socket) => {
+            console.log('a user connected');
+        });
+
+    }
+}
