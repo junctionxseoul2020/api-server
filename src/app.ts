@@ -3,6 +3,7 @@ import express from "express"
 import {indexRouter} from "./router/indexRouter";
 import {socketRouter} from "./router/socketRouter";
 import {userRouter} from "./router/userRouter";
+import {channelRouter} from "./router/channelRouter";
 import {createServer} from 'http'
 import socket from "socket.io";
 
@@ -15,6 +16,7 @@ export const app = async () => {
     app.use(express.json());
     app.use('/', new indexRouter().router);
     app.use('/user', new userRouter().router);
+    app.use('/channel', new channelRouter().router);
 
     const io = socket(server);
     new socketRouter(io)

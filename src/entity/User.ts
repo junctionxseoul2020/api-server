@@ -22,6 +22,9 @@ export class User {
     @Column({nullable: true})
     status!: string;
 
+    @Column()
+    photo!: string;
+
     @ManyToOne(() => Workspace)
     workspace!: Workspace;
 
