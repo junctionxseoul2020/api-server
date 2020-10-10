@@ -3,7 +3,7 @@ import express from "express"
 import {indexRouter} from "./router/indexRouter";
 import {socketRouter} from "./router/socketRouter";
 import {userRouter} from "./router/userRouter";
-import { createServer} from 'http'
+import {createServer} from 'http'
 import socket from "socket.io";
 
 
@@ -19,6 +19,6 @@ export const app = async () => {
     new socketRouter(io)
 
     server.listen(process.env.PORT || 3000, () => {
-        console.log("Server가 실행되었습니다.")
+        console.log("Server 가 실행되었습니다.")
     })
 }
