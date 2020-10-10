@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Workspace} from "./Workspace";
-import has = Reflect.has;
+import {User} from "./User";
 
 @Entity()
 export class Chat {
@@ -12,7 +12,7 @@ export class Chat {
     name!: string;
 
     @Column()
-    email!: string;
+    participants!: User[];
 
     @Column()
     password!: string;
@@ -20,7 +20,7 @@ export class Chat {
     @Column()
     hashcode!: string;
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     status!: string;
 
     @ManyToOne(() => Workspace)
