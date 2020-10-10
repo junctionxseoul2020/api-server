@@ -1,5 +1,6 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Workspace} from "./Workspace";
+import {Channel} from "./Channel";
 
 @Entity()
 export class User {
@@ -22,11 +23,14 @@ export class User {
     @Column({nullable: true})
     status!: string;
 
-    @Column()
+    @Column({nullable: true})
     photo!: string;
 
     @ManyToOne(() => Workspace)
     workspace!: Workspace;
+
+    @ManyToMany(() => Channel, channel => channel.participants)
+    channels!: Channel[];
 
     toUser(name: string, email: string, password: string, status: string, hashcode: string, workspace: Workspace) {
         this.name = name;
