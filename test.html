@@ -61,7 +61,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
     $(function () {
-        const socket = io('http://localhost:3000');
+        const socket = io('https://junctionx.azurewebsites.net/');
         socket.emit('join room', 'ab', 's')
         $('form').submit(function (e) {
             e.preventDefault(); // prevents page reloading

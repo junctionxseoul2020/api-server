@@ -12,6 +12,7 @@ export const app = async () => {
     const app = express()
     const server = createServer(app);
 
+    app.use(express.json());
     app.use('/', new indexRouter().router);
     app.use('/user', new userRouter().router);
 

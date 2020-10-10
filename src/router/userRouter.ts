@@ -11,7 +11,7 @@ export class userRouter {
     constructor() {
         console.log("indexRouter 부트")
 
-        this.router.get('/login', async (req, res) => {
+        this.router.post('/login', async (req, res) => {
             const user = await this.userRepository.findOne({email: req.body.email})
             if (!user) {
                 return res.json('not found user')
@@ -24,7 +24,7 @@ export class userRouter {
             return res.json('login error')
         });
 
-        this.router.get('/logout', async (req, res) => {
+        this.router.post('/logout', async (req, res) => {
             const user = await this.userRepository.findOne({id: req.body.id})
             if (!user) {
                 return res.json('not found user')
@@ -34,13 +34,14 @@ export class userRouter {
             return res.json(loggedOutUser)
         });
 
-        this.router.get('/register', async (req, res) => {
-            const workspace = await this.workspaceRepository.findOne({id: req.body.id})
+        this.router.post('/register', async (req, res) => {
+            const workspace = await this.workspaceRepository.findOne({id: req.body.workspaceId})
             if (!workspace) {
                 return res.json('workspace error')
             }
-            const user = new User().toUser(req.body.name, req.body.email, req.body.password, req.body.hashcode, workspace)
-            return await this.userRepository.save(user)
+            const user = new User().toUser(req.body.name, req.body.email, req.body.password, 'Registered', req.body.hashcode, workspace)
+            await this.userRepository.save(user)
+            return res.json(user)
         });
     }
 }
