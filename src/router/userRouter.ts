@@ -2,6 +2,7 @@ import {Router} from "express";
 import {User} from "../entity/User";
 import {connection} from "../database";
 import {Workspace} from "../entity/Workspace";
+import {getProfileImageUrl} from "../utils/ZepetoAPI";
 
 export class userRouter {
     public router = Router();
@@ -18,6 +19,7 @@ export class userRouter {
             }
             if (user.password === req.body.password) {
                 user.status = 'LoggedIn'
+                user.photo = await getProfileImageUrl(user.hashcode)
                 await this.userRepository.save(user);
                 return res.json(user)
             }
