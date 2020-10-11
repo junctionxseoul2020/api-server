@@ -40,6 +40,7 @@ export class conferenceRouter {
             const conference = new Conference();
             conference.description = req.body.description;
             conference.name = req.body.name;
+            conference.participants = users;
             conference.releasedAt = req.body.releasedAt;
             conference.workspace = workspace;
             conference.channel = savedChannel
