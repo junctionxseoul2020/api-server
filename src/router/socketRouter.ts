@@ -47,7 +47,11 @@ export class socketRouter {
                     }
                     channel.participants.push(user)
                     await this.channelRepository.save(channel);
-                    const chats = await this.chatRepository.find({relations: ['author'], order: {createdAt: "ASC"}})
+                    const chats = await this.chatRepository.find({
+                        where: {channel},
+                        relations: ['author'],
+                        order: {createdAt: "ASC"}
+                    })
                     console.log('join', room, user.name, chats)
                     socket.emit('hello')
                     io.to(socket.id).emit('joinRoom', user.name, JSON.stringify(chats));
